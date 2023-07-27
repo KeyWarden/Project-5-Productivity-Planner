@@ -9,7 +9,7 @@ function App() {
       </header>
       <Button variant="primary">primary</Button>
       <footer className='App-footer'>
-        Contact Details
+        Contact Detailspip
       </footer>
     </div>
   );
