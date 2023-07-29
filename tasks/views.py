@@ -70,7 +70,7 @@ class GroupList(APIView):
     def get(self, request):
         groups = TaskGroup.objects.all()
         serializer = GroupSerializer(
-            tasks, many=True, context={'request': request}
+            groups, many=True, context={'request': request}
         )
         return Response(serializer.data)
     
@@ -91,7 +91,7 @@ class GroupDetail(APIView):
     def get_object(self, pk):
         try:
             group = TaskGroup.objects.get(pk=pk)
-            self.check_object_permissions(self.request, task)
+            self.check_object_permissions(self.request, group)
             return group
         except TaskGroup.DoesNotExist:
             raise Http404
