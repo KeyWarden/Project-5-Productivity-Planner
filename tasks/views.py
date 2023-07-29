@@ -10,19 +10,28 @@ from pro_plan.permissions import IsOwnerOrReadOnly
 
 
 class TaskList(APIView):
-    """List all Tasks"""
+    """Lists current user's Tasks"""
     serializer_class = TaskSerializer
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly
     ]
-    def get(self, request):
-        tasks = Task.objects.all()
-        serializer = TaskSerializer(
-            tasks, many=True, context={'request': request}
-        )
-        return Response(serializer.data)
     
+    def get(self, request):
+        if request.user.is_authenticated:
+            tasks = Task.objects.filter(owner=request.user)
+            serializer = TaskSerializer(
+                tasks, many=True, context={'request': request}
+            )
+            return Response(serializer.data)
+        else:
+            tasks = Task.objects.all()
+            serializer = TaskSerializer(
+                tasks, many=True, context={'request': request}
+            )
+            return Response(serializer.data)
+
     def post(self, request):
+        """Manages new Task submission"""
         serializer = TaskSerializer(
             data=request.data, context={'request': request}
         )
@@ -33,7 +42,7 @@ class TaskList(APIView):
 
 
 class TaskDetail(APIView):
-    """Manages Task Data Retrieval and Submission"""
+    """Manages specific Task Data retrieval and editing"""
     serializer_class = TaskSerializer
     permission_classes = [IsOwnerOrReadOnly]
     def get_object(self, pk):
@@ -62,12 +71,18 @@ class TaskDetail(APIView):
         return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
 
 class GroupList(APIView):
-    """List all Groups"""
+    """List current user's Groups"""
     serializer_class = GroupSerializer
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly
     ]
     def get(self, request):
+        if request.user.is_authenticated:
+            groups = TaskGroup.objects.filter(owner=request.user)
+            serializer = GroupSerializer(
+                groups, many=True, context={'request': request}
+            )
+            return Response(serializer.data)
         groups = TaskGroup.objects.all()
         serializer = GroupSerializer(
             groups, many=True, context={'request': request}
@@ -75,6 +90,7 @@ class GroupList(APIView):
         return Response(serializer.data)
     
     def post(self, request):
+        """Manages new Group submission"""
         serializer = GroupSerializer(
             data=request.data, context={'request': request}
         )
@@ -85,7 +101,7 @@ class GroupList(APIView):
 
 
 class GroupDetail(APIView):
-    """Manages Group Data Retrieval and Submission"""
+    """Manages specific Group Data retrieval and editing"""
     serializer_class = GroupSerializer
     permission_classes = [IsOwnerOrReadOnly]
     def get_object(self, pk):

@@ -18,7 +18,7 @@ class ProfileList(APIView):
 
 
 class ProfileDetail(APIView):
-    """Manages Profile Data Retrieval and Submission"""
+    """Manages specific Profile Data retrieval and editing"""
     serializer_class = ProfileSerializer
     permission_classes = [IsOwnerOrReadOnly]
     def get_object(self, pk):

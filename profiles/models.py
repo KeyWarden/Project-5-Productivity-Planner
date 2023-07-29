@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 
 class Profile(models.Model):
+    """defines the Profile Model"""
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -18,6 +19,7 @@ class Profile(models.Model):
 
 
 def create_profile(sender, instance, created, **kwargs):
+    """creates new Profile when new user is registered"""
     if created:
         Profile.objects.create(owner=instance, name=instance)
 

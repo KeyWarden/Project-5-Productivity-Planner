@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 
 class Task(models.Model):
+    """defines the Task Model"""
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -19,6 +20,7 @@ class Task(models.Model):
 
 
 class TaskGroup(models.Model):
+    """defines the TaskGroup Model"""
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
