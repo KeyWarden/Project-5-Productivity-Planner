@@ -1,7 +1,11 @@
 // import Button from 'react-bootstrap/Button';
+// import React, {useState, useEffect} from 'react';
+// import axios from 'axios';
 import './App.css';
 
 function App() {
+  // const [isUser, changeStatus] = useState()
+  // const [error, setError] = useState(null)
   return (
     <div className="App">
       <header className='App-header'>
