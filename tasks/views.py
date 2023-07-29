@@ -1,5 +1,5 @@
 from django.http import Http404
-from rest_framework import status
+from rest_framework import status, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Task
@@ -10,6 +10,9 @@ from pro_plan.permissions import IsOwnerOrReadOnly
 class TaskList(APIView):
     """List all Tasks"""
     serializer_class = TaskSerializer
+    permission_classes = [
+        permissions.IsAuthenticatedOrReadOnly
+    ]
     def get(self, request):
         tasks = Task.objects.all()
         serializer = TaskSerializer(
@@ -22,7 +25,7 @@ class TaskList(APIView):
             data=request.data, context={'request': request}
         )
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(owner=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
 
