@@ -17,3 +17,7 @@ Selecting Groups would change the display to show the user a table of their Grou
 Obviously, the user would also be able to make new Groups.
 
 That covers pretty much all the important plans.
+
+# NOTE:
+
+I used the Moments template for this project
