@@ -1,7 +1,8 @@
 // import Button from 'react-bootstrap/Button';
-// import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 // import axios from 'axios';
 import './App.css';
+import Tasks from './Tasks';
 
 function App() {
   // const [isUser, changeStatus] = useState()
@@ -17,6 +18,7 @@ function App() {
       <div className='App-content'>
         <p>When not logged in, this will contain an intoduction to the app for new users, as well as the log in</p>
         <p>When logged in, it will default to the Tasks app. Depnding on chosen feature, it will direct to other apps</p>
+        <Tasks />
       </div>
       <footer className='App-footer'>
         <h3>Contact Details</h3>
