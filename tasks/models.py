@@ -18,9 +18,16 @@ class Task(models.Model):
         return f"{self.owner.username} - {self.title}"
 
 
-def create_task(sender, instance, created, **kwargs):
-    if created:
-        Task.objects.create(owner=instance)
+class TaskGroup(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='task_group')
+    description = models.TextField(blank=True)
+    group_size = models.IntegerField(null=False, blank=False)
 
+    class Meta:
+        ordering = ['task']
 
-# post_save.connect(create_profile, sender=User)
+    def __str__(self):
+        return f"{self.owner.username} - {self.task.title} Group"
